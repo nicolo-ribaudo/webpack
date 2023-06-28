@@ -3037,6 +3037,16 @@ declare interface CssParserOptions {
 	namedExports?: boolean;
 }
 type Declaration = FunctionDeclaration | VariableDeclaration | ClassDeclaration;
+
+/**
+ * Options for defer import.
+ */
+declare interface DeferImportExperimentOptions {
+	/**
+	 * Defer import is not compatible with async modules (module that uses top-level-await or AsyncWebAssembly). This options controls how to handle async modules.
+	 */
+	asyncModule: "error" | "ignore" | "proposal";
+}
 declare class DefinePlugin {
 	/**
 	 * Create a new define plugin
@@ -3098,6 +3108,7 @@ declare interface DependenciesBlockLike {
 declare class Dependency {
 	constructor();
 	weak: boolean;
+	defer: boolean;
 	optional: boolean;
 	get type(): string;
 	get category(): string;
@@ -3139,12 +3150,18 @@ declare class Dependency {
 	/**
 	 * Returns warnings
 	 */
-	getWarnings(moduleGraph: ModuleGraph): undefined | null | WebpackError[];
+	getWarnings(
+		moduleGraph: ModuleGraph,
+		checkMode?: DependencyCheckMode
+	): undefined | null | WebpackError[];
 
 	/**
 	 * Returns errors
 	 */
-	getErrors(moduleGraph: ModuleGraph): undefined | null | WebpackError[];
+	getErrors(
+		moduleGraph: ModuleGraph,
+		checkMode?: DependencyCheckMode
+	): undefined | null | WebpackError[];
 
 	/**
 	 * Update the hash
@@ -3166,6 +3183,10 @@ declare class Dependency {
 	static NO_EXPORTS_REFERENCED: string[][];
 	static EXPORTS_OBJECT_REFERENCED: string[][];
 	static TRANSITIVE: typeof TRANSITIVE;
+}
+declare interface DependencyCheckMode {
+	useSyncAssertion: boolean;
+	deferModuleMode: false | DeferImportExperimentOptions;
 }
 declare interface DependencyConstructor {
 	new (...args: any[]): Dependency;
@@ -3997,9 +4018,19 @@ declare interface ExperimentsExtra {
 	css?: boolean;
 
 	/**
+	 * Enable experimental tc39 proposal https://github.com/tc39/proposal-defer-import-eval. This allows to defer execution of a module until it's first use.
+	 */
+	deferImport?: false | DeferImportExperimentOptions;
+
+	/**
 	 * Compile entrypoints and import()s only when they are accessed.
 	 */
 	lazyCompilation?: boolean | LazyCompilationOptions;
+
+	/**
+	 * Assert the graph of the imported module is not async (contains top-level-await or Async WebAssembly).
+	 */
+	syncImportAssertion?: boolean;
 }
 type ExperimentsNormalized = ExperimentsCommon & ExperimentsNormalizedExtra;
 
@@ -4018,9 +4049,19 @@ declare interface ExperimentsNormalizedExtra {
 	css?: boolean;
 
 	/**
+	 * Enable experimental tc39 proposal https://github.com/tc39/proposal-defer-import-eval. This allows to defer execution of a module until it's first use.
+	 */
+	deferImport?: false | DeferImportExperimentOptions;
+
+	/**
 	 * Compile entrypoints and import()s only when they are accessed.
 	 */
 	lazyCompilation?: false | LazyCompilationOptions;
+
+	/**
+	 * Assert the graph of the imported module is not async (contains top-level-await or Async WebAssembly).
+	 */
+	syncImportAssertion?: boolean;
 }
 declare abstract class ExportInfo {
 	name: string;
@@ -5036,9 +5077,13 @@ declare interface HandleModuleCreationOptions {
 	 */
 	checkCycle?: boolean;
 }
+type HarmonyDependencyCheckMode = DependencyCheckMode & {
+	strictExportPresence?: boolean;
+};
 declare class HarmonyImportDependency extends ModuleDependency {
 	constructor(request: string, sourceOrder: number, assertions?: Assertions);
 	sourceOrder: number;
+	syncAssert: boolean;
 	getImportVar(moduleGraph: ModuleGraph): string;
 	getImportStatement(
 		update: boolean,
@@ -5047,7 +5092,8 @@ declare class HarmonyImportDependency extends ModuleDependency {
 	getLinkingErrors(
 		moduleGraph: ModuleGraph,
 		ids: string[],
-		additionalMessage: string
+		additionalMessage: string,
+		checkMode?: HarmonyDependencyCheckMode
 	): undefined | WebpackError[];
 	static Template: typeof HarmonyImportDependencyTemplate;
 	static ExportPresenceModes: {
@@ -8046,6 +8092,7 @@ declare class ModuleGraph {
 	setDepth(module: Module, depth: number): void;
 	setDepthIfLower(module: Module, depth: number): boolean;
 	isAsync(module: Module): boolean;
+	isDeferred(module: Module): boolean;
 	setAsync(module: Module): void;
 	getMeta(thing?: any): Object;
 	getMetaIfExisting(thing?: any): undefined | Object;
@@ -11745,6 +11792,10 @@ declare abstract class RuntimeTemplate {
 		 */
 		module: Module;
 		/**
+		 * the module graph
+		 */
+		moduleGraph: ModuleGraph;
+		/**
 		 * the chunk graph
 		 */
 		chunkGraph: ChunkGraph;
@@ -11768,12 +11819,20 @@ declare abstract class RuntimeTemplate {
 		 * if set, will be filled with runtime requirements
 		 */
 		runtimeRequirements: Set<string>;
+		/**
+		 * if set, the module will be deferred
+		 */
+		defer?: boolean;
 	}): [string, string];
 	exportFromImport(__0: {
 		/**
 		 * the module graph
 		 */
 		moduleGraph: ModuleGraph;
+		/**
+		 * the chunk graph
+		 */
+		chunkGraph: ChunkGraph;
 		/**
 		 * the module
 		 */
@@ -11822,6 +11881,10 @@ declare abstract class RuntimeTemplate {
 		 * if set, will be filled with runtime requirements
 		 */
 		runtimeRequirements: Set<string>;
+		/**
+		 * if true, the module will be deferred.
+		 */
+		defer?: boolean;
 	}): string;
 	blockPromise(__0: {
 		/**
@@ -13974,6 +14037,7 @@ declare namespace exports {
 		export let preloadChunkHandlers: "__webpack_require__.H";
 		export let definePropertyGetters: "__webpack_require__.d";
 		export let makeNamespaceObject: "__webpack_require__.r";
+		export let makeDeferredNamespaceObject: "__webpack_require__.z";
 		export let createFakeNamespaceObject: "__webpack_require__.t";
 		export let compatGetDefaultExport: "__webpack_require__.n";
 		export let harmonyModuleDecorator: "__webpack_require__.hmd";
