@@ -7,42 +7,9 @@
 "use strict";
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
-/* deferred harmony import */ var _full_sync_js__WEBPACK_IMPORTED_MODULE_0__ = {
-	a: new Proxy({}, {
-		getOwnPropertyDescriptor: (_, k) => (Reflect.getOwnPropertyDescriptor(__webpack_require__(2), k)),
-		get: (_, k) => (Reflect.get(__webpack_require__(2), k)),
-		set: (_, k, v) => (Reflect.set(__webpack_require__(2), k, v)),
-		has: (_, k) => (Reflect.has(__webpack_require__(2), k)),
-		deleteProperty: (_, k) => (Reflect.deleteProperty(__webpack_require__(2), k)),
-		ownKeys: (_, k) => (Reflect.ownKeys(__webpack_require__(2), k)),
-		defineProperty: (_, k, d) => (Reflect.defineProperty(__webpack_require__(2), k, d)),
-		getPrototypeOf: () => (null),
-		setPrototypeOf: (_, p) => (p === null),
-		isExtensible: () => (false),
-		preventExtensions: () => (true)
-	})
-};
+/* deferred harmony import */ var _full_sync_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__.z(2, 0, []);
 /* harmony import */ var _async_mod_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
-/* deferred harmony import */ var _deep_async_js__WEBPACK_IMPORTED_MODULE_2__ = Promise.all([
-	/* deferred harmony import async dependency */ __webpack_require__(7),
-]).then(function () {
-	return new Proxy({ f: true }, {
-		getOwnPropertyDescriptor: (_, k) => (Reflect.getOwnPropertyDescriptor(__webpack_handle_async_dependencies__([__webpack_require__(6)])[0], k)),
-		get: (t, k) => {
-			if (t.f) { t.f = false; return undefined }
-			return Reflect.get(__webpack_handle_async_dependencies__([__webpack_require__(6)])[0], k);
-		},
-		set: (_, k, v) => (Reflect.set(__webpack_handle_async_dependencies__([__webpack_require__(6)])[0], k, v)),
-		has: (_, k) => (Reflect.has(__webpack_handle_async_dependencies__([__webpack_require__(6)])[0], k)),
-		deleteProperty: (_, k) => (Reflect.deleteProperty(__webpack_handle_async_dependencies__([__webpack_require__(6)])[0], k)),
-		ownKeys: (_, k) => (Reflect.ownKeys(__webpack_handle_async_dependencies__([__webpack_require__(6)])[0], k)),
-		defineProperty: (_, k, d) => (Reflect.defineProperty(__webpack_handle_async_dependencies__([__webpack_require__(6)])[0], k, d)),
-		getPrototypeOf: () => (null),
-		setPrototypeOf: (_, p) => (p === null),
-		isExtensible: () => (false),
-		preventExtensions: () => (true)
-	});
-});
+/* deferred harmony import */ var _deep_async_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__.z(6, 0, [7]);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_async_mod_js__WEBPACK_IMPORTED_MODULE_1__, _deep_async_js__WEBPACK_IMPORTED_MODULE_2__]);
 ([_async_mod_js__WEBPACK_IMPORTED_MODULE_1__, _deep_async_js__WEBPACK_IMPORTED_MODULE_2__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -53,7 +20,7 @@ console.log("START entry.js");
 
 setTimeout(() => {
   console.log("TRIGGER full-sync.js");
-  _full_sync_js__WEBPACK_IMPORTED_MODULE_0__.a.x;
+  _full_sync_js__WEBPACK_IMPORTED_MODULE_0__.x;
 }, 5000);
 setTimeout(() => {
   console.log("TRIGGER async-mod.js");
@@ -181,6 +148,9 @@ __webpack_async_result__();
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
 /******/ 	
+/******/ 	// The deferred module cache
+/******/ 	var __webpack_module_deferred_exports__ = {};
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -192,11 +162,13 @@ __webpack_async_result__();
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
 /******/ 			// no module.id needed
 /******/ 			// no module.loaded needed
-/******/ 			exports: {}
+/******/ 			exports: __webpack_module_deferred_exports__[moduleId] || {}
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 		// delete __webpack_module_deferred_exports__[module];
+/******/ 		// skipped because strictModuleErrorHandling is not enabled.
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -272,6 +244,36 @@ __webpack_async_result__();
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/create fake namespace object */
+/******/ 	(() => {
+/******/ 		var getProto = Object.getPrototypeOf ? (obj) => (Object.getPrototypeOf(obj)) : (obj) => (obj.__proto__);
+/******/ 		var leafPrototypes;
+/******/ 		// create a fake namespace object
+/******/ 		// mode & 1: value is a module id, require it
+/******/ 		// mode & 2: merge all properties of value into the ns
+/******/ 		// mode & 4: return value when already ns object
+/******/ 		// mode & 16: return value when it's Promise-like
+/******/ 		// mode & 8|1: behave like require
+/******/ 		__webpack_require__.t = function(value, mode) {
+/******/ 			if(mode & 1) value = this(value);
+/******/ 			if(mode & 8) return value;
+/******/ 			if(typeof value === 'object' && value) {
+/******/ 				if((mode & 4) && value.__esModule) return value;
+/******/ 				if((mode & 16) && typeof value.then === 'function') return value;
+/******/ 			}
+/******/ 			var ns = Object.create(null);
+/******/ 			__webpack_require__.r(ns);
+/******/ 			var def = {};
+/******/ 			leafPrototypes = leafPrototypes || [null, getProto({}), getProto([]), getProto(getProto)];
+/******/ 			for(var current = mode & 2 && value; typeof current == 'object' && !~leafPrototypes.indexOf(current); current = getProto(current)) {
+/******/ 				Object.getOwnPropertyNames(current).forEach((key) => (def[key] = () => (value[key])));
+/******/ 			}
+/******/ 			def['default'] = () => (value);
+/******/ 			__webpack_require__.d(ns, def);
+/******/ 			return ns;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -287,6 +289,102 @@ __webpack_async_result__();
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make deferred namespace object */
+/******/ 	(() => {
+/******/ 		__webpack_require__.z = (moduleId, mode, asyncDepsIds) => {
+/******/ 			// mode: 0 => namespace (esm)
+/******/ 			// mode: 1 => default-only (esm strict cjs)
+/******/ 			// mode: 2 => default-with-named (esm-cjs compat)
+/******/ 			// mode: 3 => dynamic (if exports has __esModule, then esm, otherwise default-with-named)
+/******/ 		
+/******/ 			var skipFistGetTrap = asyncDepsIds && asyncDepsIds.length > 0;
+/******/ 		
+/******/ 			if (skipFistGetTrap) {
+/******/ 				return Promise.all(asyncDepsIds.map(__webpack_require__)).then(continuation);
+/******/ 			}
+/******/ 			return continuation();
+/******/ 		
+/******/ 			function continuation() {
+/******/ 				var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 				// optimization not applied when output.strictModuleErrorHandling is off
+/******/ 		
+/******/ 				if (mode == 1) {
+/******/ 					var ns = Object.create(null);
+/******/ 					__webpack_require__.r(ns);
+/******/ 					__webpack_require__.d(ns, {
+/******/ 						"default": () => {
+/******/ 							var exports = __webpack_require__(moduleId);
+/******/ 							__webpack_require__.d(ns, {
+/******/ 								"default": () => (exports)
+/******/ 							});
+/******/ 							return exports;
+/******/ 						}
+/******/ 					});
+/******/ 					return ns
+/******/ 				}
+/******/ 		
+/******/ 				var init = () => {
+/******/ 					ns = __webpack_require__(moduleId);
+/******/ 					init = undefined;
+/******/ 					if (mode == 3) {
+/******/ 						if (ns.__esModule) mode = 0;
+/******/ 						else mode = 2;
+/******/ 					}
+/******/ 					if (!!mode) return;
+/******/ 					delete handler.defineProperty;
+/******/ 					delete handler.deleteProperty;
+/******/ 					delete handler.set;
+/******/ 					delete handler.get;
+/******/ 					delete handler.has;
+/******/ 					delete handler.ownKeys;
+/******/ 					delete handler.getOwnPropertyDescriptor;
+/******/ 				}
+/******/ 		
+/******/ 				var ns = cachedModule && cachedModule.exports || __webpack_module_deferred_exports__[moduleId] || (__webpack_module_deferred_exports__[moduleId] = Object.create(null));
+/******/ 				var handler = {
+/******/ 					__proto__: null,
+/******/ 					get: (target, name) => {
+/******/ 						if (skipFistGetTrap) { skipFistGetTrap = false; return undefined; }
+/******/ 						if (name === "__esModule") return true;
+/******/ 						if (name === Symbol.toStringTag) return "Module";
+/******/ 						if (init) init();
+/******/ 						if (mode == 2 && name == "default" && !__webpack_require__.o(ns, name)) {
+/******/ 							return ns;
+/******/ 						}
+/******/ 						return Reflect.get(ns, name);
+/******/ 					},
+/******/ 					has: (target, name) => {
+/******/ 						if (name === "__esModule") return true;
+/******/ 						if (name === Symbol.toStringTag) return true;
+/******/ 						if (init) init();
+/******/ 						return Reflect.has(ns, name);
+/******/ 					},
+/******/ 					ownKeys: () => {
+/******/ 						if (init) init();
+/******/ 						return Reflect.ownKeys(ns);
+/******/ 					},
+/******/ 					getOwnPropertyDescriptor: (target, name) => {
+/******/ 						if (name === "__esModule") return { value: true, configurable: !!mode };
+/******/ 						if (name === Symbol.toStringTag) return { value: "Module", configurable: !!mode };
+/******/ 						if (init) init();
+/******/ 						var desc = Reflect.getOwnPropertyDescriptor(ns, name);
+/******/ 						if (mode == 2 && name == "default" && !desc) {
+/******/ 							desc = { value: ns, configurable: true };
+/******/ 						}
+/******/ 						return desc;
+/******/ 					},
+/******/ 					defineProperty: (target, name) => {
+/******/ 						if (init) init();
+/******/ 						return Reflect.defineProperty(ns, name);
+/******/ 					},
+/******/ 					deleteProperty: () => (false),
+/******/ 					set: () => (false),
+/******/ 				}
+/******/ 				return new Proxy(ns, handler);
+/******/ 			}
+/******/ 		}
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
