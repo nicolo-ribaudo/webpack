@@ -1,8 +1,8 @@
 import "./async-mod-dep.js";
 
-console.log("START async-mod.js");
+__configCases__deferImport__proposal.push("START async-mod.js");
 
 await 0;
-export let x;
+export let x = 2;
 
-console.log("END async-mod.js");
+__configCases__deferImport__proposal.push("END async-mod.js");

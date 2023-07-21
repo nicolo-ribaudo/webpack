@@ -1,7 +1,7 @@
 import "./deep-async-dep.js";
 
-console.log("START deep-async.js");
+__configCases__deferImport__proposal.push("START deep-async.js");
 
-export let x;
+export let x = 3;
 
-console.log("END deep-async.js");
+__configCases__deferImport__proposal.push("END deep-async.js");

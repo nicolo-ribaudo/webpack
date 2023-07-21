@@ -1,5 +1,5 @@
 export {};
 
-console.log("START deep-async-dep.js");
+__configCases__deferImport__proposal.push("START deep-async-dep.js");
 await 0;
-console.log("END deep-async-dep.js");
+__configCases__deferImport__proposal.push("END deep-async-dep.js");

@@ -1,7 +1,7 @@
 import "./full-sync-dep.js";
 
-console.log("START full-sync.js");
+__configCases__deferImport__proposal.push("START full-sync.js");
 
-export let x;
+export let x = 1;
 
-console.log("END full-sync.js");
+__configCases__deferImport__proposal.push("END full-sync.js");

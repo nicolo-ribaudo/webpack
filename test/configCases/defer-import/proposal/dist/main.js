@@ -5,33 +5,26 @@
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
+var _full_sync_js__WEBPACK_IMPORTED_MODULE_0___deferred_namespace_cache;
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 /* deferred harmony import */ var _full_sync_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__.z(2, 0, []);
 /* harmony import */ var _async_mod_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
-/* deferred harmony import */ var _deep_async_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__.z(6, 0, [7]);
+/* deferred harmony import */ var _deep_async_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__.z(6, 0, [7], __webpack_handle_async_dependencies__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_async_mod_js__WEBPACK_IMPORTED_MODULE_1__, _deep_async_js__WEBPACK_IMPORTED_MODULE_2__]);
 ([_async_mod_js__WEBPACK_IMPORTED_MODULE_1__, _deep_async_js__WEBPACK_IMPORTED_MODULE_2__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
 
-console.log("START entry.js");
+__configCases__deferImport__proposal.push("START entry.js");
 
-setTimeout(() => {
-  console.log("TRIGGER full-sync.js");
-  _full_sync_js__WEBPACK_IMPORTED_MODULE_0__.x;
-}, 5000);
-setTimeout(() => {
-  console.log("TRIGGER async-mod.js");
-  _async_mod_js__WEBPACK_IMPORTED_MODULE_1__.x;
-}, 10000);
-setTimeout(() => {
-  console.log("TRIGGER deep-async.js");
-  _deep_async_js__WEBPACK_IMPORTED_MODULE_2__.x;
-}, 15000);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({ fullSync: /*#__PURE__*/ (_full_sync_js__WEBPACK_IMPORTED_MODULE_0___deferred_namespace_cache || (_full_sync_js__WEBPACK_IMPORTED_MODULE_0___deferred_namespace_cache = __webpack_require__.z(2, /* namespace */ 0))), asyncMod: _async_mod_js__WEBPACK_IMPORTED_MODULE_1__, deepAsync: _deep_async_js__WEBPACK_IMPORTED_MODULE_2__ });
 
-console.log("END entry.js");
+__configCases__deferImport__proposal.push("END entry.js");
 
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
@@ -48,11 +41,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _full_sync_dep_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
 
 
-console.log("START full-sync.js");
+__configCases__deferImport__proposal.push("START full-sync.js");
 
-let x;
+let x = 1;
 
-console.log("END full-sync.js");
+__configCases__deferImport__proposal.push("END full-sync.js");
 
 
 /***/ }),
@@ -63,8 +56,8 @@ console.log("END full-sync.js");
 __webpack_require__.r(__webpack_exports__);
 
 
-console.log("START full-sync-dep.js");
-console.log("END full-sync-dep.js");
+__configCases__deferImport__proposal.push("START full-sync-dep.js");
+__configCases__deferImport__proposal.push("END full-sync-dep.js");
 
 
 /***/ }),
@@ -80,12 +73,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _async_mod_dep_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
 
 
-console.log("START async-mod.js");
+__configCases__deferImport__proposal.push("START async-mod.js");
 
 await 0;
-let x;
+let x = 2;
 
-console.log("END async-mod.js");
+__configCases__deferImport__proposal.push("END async-mod.js");
 
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } }, 1);
@@ -98,8 +91,8 @@ __webpack_async_result__();
 __webpack_require__.r(__webpack_exports__);
 
 
-console.log("START async-mod-dep.js");
-console.log("END async-mod-dep.js");
+__configCases__deferImport__proposal.push("START async-mod-dep.js");
+__configCases__deferImport__proposal.push("END async-mod-dep.js");
 
 
 /***/ }),
@@ -117,11 +110,11 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_dee
 _deep_async_dep_js__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
 
-console.log("START deep-async.js");
+__configCases__deferImport__proposal.push("START deep-async.js");
 
-let x;
+let x = 3;
 
-console.log("END deep-async.js");
+__configCases__deferImport__proposal.push("END deep-async.js");
 
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
@@ -135,9 +128,9 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 __webpack_require__.r(__webpack_exports__);
 
 
-console.log("START deep-async-dep.js");
+__configCases__deferImport__proposal.push("START deep-async-dep.js");
 await 0;
-console.log("END deep-async-dep.js");
+__configCases__deferImport__proposal.push("END deep-async-dep.js");
 
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } }, 1);
@@ -293,7 +286,7 @@ __webpack_async_result__();
 /******/ 	
 /******/ 	/* webpack/runtime/make deferred namespace object */
 /******/ 	(() => {
-/******/ 		__webpack_require__.z = (moduleId, mode, asyncDepsIds) => {
+/******/ 		__webpack_require__.z = (moduleId, mode, asyncDepsIds, syncExtractModule) => {
 /******/ 			// mode: 0 => namespace (esm)
 /******/ 			// mode: 1 => default-only (esm strict cjs)
 /******/ 			// mode: 2 => default-with-named (esm-cjs compat)
@@ -327,6 +320,7 @@ __webpack_async_result__();
 /******/ 		
 /******/ 				var init = () => {
 /******/ 					ns = __webpack_require__(moduleId);
+/******/ 					if (syncExtractModule) ns = syncExtractModule([ns])[0];
 /******/ 					init = undefined;
 /******/ 					if (mode == 3) {
 /******/ 						if (ns.__esModule) mode = 0;
@@ -402,22 +396,51 @@ __webpack_async_result__();
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-
-var it = (name, fn) => {
-	fn();
-}
-var expect = (a) => ({
-	toBe: (b) => {
-		if (a !== b) throw new Error(`${a} !== ${b}`);
-	},
-});
-
 it("should compile", async () => {
+	const logs = globalThis.__configCases__deferImport__proposal = [];
+
 	// change to other way if webpack in the future rejects require a TLA esm.
 	let mod = __webpack_require__(1);
-	//expect(mod).toBeInstanceOf(Promise);
-	//mod = await mod;
-	//expect(mod._.val).toBe(1);
+	expect(mod).toBeInstanceOf(Promise);
+
+	expect(logs).toEqual([
+		"START async-mod-dep.js",
+		"END async-mod-dep.js",
+		"START async-mod.js",
+		"START deep-async-dep.js"
+	]);
+	logs.length = 0;
+
+	let { default: namespaces } = await mod;
+
+	expect(logs).toEqual([
+		"END async-mod.js",
+		"END deep-async-dep.js",
+		"START entry.js",
+		"END entry.js"
+	]);
+	logs.length = 0;
+
+	let fullSyncX = namespaces.fullSync.x;
+	expect(fullSyncX).toBe(1);
+	expect(logs).toEqual([
+		"START full-sync-dep.js",
+		"END full-sync-dep.js",
+		"START full-sync.js",
+		"END full-sync.js"
+	]);
+	logs.length = 0;
+
+	let asyncModX = namespaces.asyncMod.x;
+	expect(asyncModX).toBe(2);
+	expect(logs).toEqual([]);
+
+	let deepAsyncX = namespaces.deepAsync.x;
+	expect(deepAsyncX).toBe(3);
+	expect(logs).toEqual([
+		"START deep-async.js",
+		"END deep-async.js"
+	]);
 });
 
 })();
