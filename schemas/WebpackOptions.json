@@ -506,6 +506,19 @@
         }
       }
     },
+    "DeferImportExperimentOptions": {
+      "description": "Options for defer import.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "asyncModule": {
+          "description": "The execution of async modules (module that uses top-level-await or AsyncWebAssembly) cannot be deferred. This options controls how to handle them:\n- \"error\": Throw an error when an async module is deferred.\n- \"ignore\": Ignore the `webpackDefer` annotation when importing an async module, or one with async dependencies.\n- \"proposal\": Eagerly evaluate the async subgraphs of a deferred module graph. This matches the behavior of the TC39 deferred imports proposal.",
+          "type": "string",
+          "enum": ["ignore", "proposal", "error"]
+        }
+      },
+      "required": ["asyncModule"]
+    },
     "Dependencies": {
       "description": "References to other configurations to depend on.",
       "type": "array",
@@ -924,6 +937,17 @@
           "description": "Enable css support.",
           "type": "boolean"
         },
+        "deferImport": {
+          "description": "Enable experimental tc39 proposal https://github.com/tc39/proposal-defer-import-eval. This allows to defer execution of a module until its first use.",
+          "anyOf": [
+            {
+              "enum": [false]
+            },
+            {
+              "$ref": "#/definitions/DeferImportExperimentOptions"
+            }
+          ]
+        },
         "futureDefaults": {
           "description": "Apply defaults of next major version.",
           "type": "boolean"
@@ -945,6 +969,10 @@
         },
         "outputModule": {
           "description": "Allow output javascript files as module source type.",
+          "type": "boolean"
+        },
+        "syncImportAssertion": {
+          "description": "Assert the graph of the imported module is not async (contains top-level-await or Async WebAssembly).",
           "type": "boolean"
         },
         "syncWebAssembly": {
@@ -1026,6 +1054,17 @@
           "description": "Enable css support.",
           "type": "boolean"
         },
+        "deferImport": {
+          "description": "Enable experimental tc39 proposal https://github.com/tc39/proposal-defer-import-eval. This allows to defer execution of a module until its first use.",
+          "anyOf": [
+            {
+              "enum": [false]
+            },
+            {
+              "$ref": "#/definitions/DeferImportExperimentOptions"
+            }
+          ]
+        },
         "futureDefaults": {
           "description": "Apply defaults of next major version.",
           "type": "boolean"
@@ -1047,6 +1086,10 @@
         },
         "outputModule": {
           "description": "Allow output javascript files as module source type.",
+          "type": "boolean"
+        },
+        "syncImportAssertion": {
+          "description": "Assert the graph of the imported module is not async (contains top-level-await or Async WebAssembly).",
           "type": "boolean"
         },
         "syncWebAssembly": {
