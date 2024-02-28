@@ -2942,7 +2942,10 @@ export interface CssParserOptions {
  */
 export interface DeferImportExperimentOptions {
 	/**
-	 * Defer import is not compatible with async modules (module that uses top-level-await or AsyncWebAssembly). This options controls how to handle async modules.
+	 * The execution of async modules (module that uses top-level-await or AsyncWebAssembly) cannot be deferred. This options controls how to handle them:
+	 * - "error": Throw an error when an async module is deferred.
+	 * - "ignore": Ignore the `webpackDefer` annotation when importing an async module, or one with async dependencies.
+	 * - "proposal": Eagerly evaluate the async subgraphs of a deferred module graph. This matches the behavior of the TC39 deferred imports proposal.
 	 */
 	asyncModule: "ignore" | "proposal" | "error";
 }
@@ -3713,7 +3716,7 @@ export interface ExperimentsExtra {
 	 */
 	css?: boolean;
 	/**
-	 * Enable experimental tc39 proposal https://github.com/tc39/proposal-defer-import-eval. This allows to defer execution of a module until it's first use.
+	 * Enable experimental tc39 proposal https://github.com/tc39/proposal-defer-import-eval. This allows to defer execution of a module until its first use.
 	 */
 	deferImport?: false | DeferImportExperimentOptions;
 	/**
@@ -3738,7 +3741,7 @@ export interface ExperimentsNormalizedExtra {
 	 */
 	css?: boolean;
 	/**
-	 * Enable experimental tc39 proposal https://github.com/tc39/proposal-defer-import-eval. This allows to defer execution of a module until it's first use.
+	 * Enable experimental tc39 proposal https://github.com/tc39/proposal-defer-import-eval. This allows to defer execution of a module until its first use.
 	 */
 	deferImport?: false | DeferImportExperimentOptions;
 	/**

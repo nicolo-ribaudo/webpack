@@ -512,7 +512,7 @@
       "additionalProperties": false,
       "properties": {
         "asyncModule": {
-          "description": "Defer import is not compatible with async modules (module that uses top-level-await or AsyncWebAssembly). This options controls how to handle async modules.",
+          "description": "The execution of async modules (module that uses top-level-await or AsyncWebAssembly) cannot be deferred. This options controls how to handle them:\n- \"error\": Throw an error when an async module is deferred.\n- \"ignore\": Ignore the `webpackDefer` annotation when importing an async module, or one with async dependencies.\n- \"proposal\": Eagerly evaluate the async subgraphs of a deferred module graph. This matches the behavior of the TC39 deferred imports proposal.",
           "type": "string",
           "enum": ["ignore", "proposal", "error"]
         }
@@ -938,7 +938,7 @@
           "type": "boolean"
         },
         "deferImport": {
-          "description": "Enable experimental tc39 proposal https://github.com/tc39/proposal-defer-import-eval. This allows to defer execution of a module until it's first use.",
+          "description": "Enable experimental tc39 proposal https://github.com/tc39/proposal-defer-import-eval. This allows to defer execution of a module until its first use.",
           "anyOf": [
             {
               "enum": [false]
@@ -1055,7 +1055,7 @@
           "type": "boolean"
         },
         "deferImport": {
-          "description": "Enable experimental tc39 proposal https://github.com/tc39/proposal-defer-import-eval. This allows to defer execution of a module until it's first use.",
+          "description": "Enable experimental tc39 proposal https://github.com/tc39/proposal-defer-import-eval. This allows to defer execution of a module until its first use.",
           "anyOf": [
             {
               "enum": [false]
