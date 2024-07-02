@@ -96,6 +96,7 @@ describe("snapshots", () => {
 		    "buildHttp": undefined,
 		    "cacheUnaffected": false,
 		    "css": undefined,
+		    "deferImport": false,
 		    "futureDefaults": false,
 		    "layers": false,
 		    "lazyCompilation": undefined,
@@ -123,11 +124,13 @@ describe("snapshots", () => {
 		      "bigIntLiteral": undefined,
 		      "const": true,
 		      "destructuring": true,
+		      "document": true,
 		      "dynamicImport": undefined,
 		      "dynamicImportInWorker": undefined,
 		      "forOf": true,
 		      "globalThis": undefined,
 		      "module": undefined,
+		      "nodePrefixForCoreModules": true,
 		      "optionalChaining": true,
 		      "templateLiteral": true,
 		    },
@@ -217,6 +220,12 @@ describe("snapshots", () => {
 		          "type": "json",
 		        },
 		        "type": "json",
+		      },
+		      Object {
+		        "type": "json",
+		        "with": Object {
+		          "type": "json",
+		        },
 		      },
 		    ],
 		    "generator": Object {},
@@ -329,6 +338,7 @@ describe("snapshots", () => {
 		    "crossOriginLoading": false,
 		    "cssChunkFilename": "[name].css",
 		    "cssFilename": "[name].css",
+		    "cssHeadDataCompression": true,
 		    "devtoolFallbackModuleFilenameTemplate": undefined,
 		    "devtoolModuleFilenameTemplate": undefined,
 		    "devtoolNamespace": "webpack",
@@ -346,11 +356,13 @@ describe("snapshots", () => {
 		      "bigIntLiteral": undefined,
 		      "const": true,
 		      "destructuring": true,
+		      "document": true,
 		      "dynamicImport": undefined,
 		      "dynamicImportInWorker": undefined,
 		      "forOf": true,
 		      "globalThis": undefined,
 		      "module": undefined,
+		      "nodePrefixForCoreModules": true,
 		      "optionalChaining": true,
 		      "templateLiteral": true,
 		    },
@@ -589,6 +601,9 @@ describe("snapshots", () => {
 		      "exports",
 		    ],
 		    "extensions": Array [],
+		    "importsFields": Array [
+		      "imports",
+		    ],
 		    "mainFields": Array [
 		      "main",
 		    ],
@@ -842,6 +857,9 @@ describe("snapshots", () => {
 		@@ ... @@
 		-       "minRemainingSize": undefined,
 		+       "minRemainingSize": 0,
+		@@ ... @@
+		-     "cssHeadDataCompression": true,
+		+     "cssHeadDataCompression": false,
 		@@ ... @@
 		-     "pathinfo": false,
 		+     "pathinfo": true,
@@ -1306,6 +1324,9 @@ describe("snapshots", () => {
 		-     "web": true,
 		+     "web": false,
 		@@ ... @@
+		-       "document": true,
+		+       "document": false,
+		@@ ... @@
 		-     "target": "web",
 		+     "target": "node",
 		@@ ... @@
@@ -1331,6 +1352,9 @@ describe("snapshots", () => {
 		@@ ... @@
 		-       "fetch",
 		+       "async-node",
+		@@ ... @@
+		-       "document": true,
+		+       "document": false,
 		@@ ... @@
 		-     "globalObject": "self",
 		+     "globalObject": "global",
@@ -1423,10 +1447,16 @@ describe("snapshots", () => {
 		+ Received
 
 		@@ ... @@
+		-       "document": true,
+		+       "document": false,
+		@@ ... @@
 		-     "chunkLoading": "jsonp",
 		+     "chunkLoading": "import-scripts",
 		@@ ... @@
 		-       "jsonp",
+		@@ ... @@
+		-       "document": true,
+		+       "document": false,
 		@@ ... @@
 		+       "worker",
 		@@ ... @@
@@ -1450,6 +1480,9 @@ describe("snapshots", () => {
 		@@ ... @@
 		-     "web": true,
 		+     "web": false,
+		@@ ... @@
+		-       "document": true,
+		+       "document": false,
 		@@ ... @@
 		-     "target": "web",
 		+     "target": "electron-main",
@@ -1476,6 +1509,9 @@ describe("snapshots", () => {
 		@@ ... @@
 		-       "fetch",
 		+       "async-node",
+		@@ ... @@
+		-       "document": true,
+		+       "document": false,
 		@@ ... @@
 		-     "globalObject": "self",
 		+     "globalObject": "global",
@@ -1578,6 +1614,9 @@ describe("snapshots", () => {
 		-     "node": false,
 		+     "node": true,
 		@@ ... @@
+		-       "document": true,
+		+       "document": false,
+		@@ ... @@
 		-     "target": "web",
 		+     "target": "electron-preload",
 		@@ ... @@
@@ -1603,6 +1642,9 @@ describe("snapshots", () => {
 		@@ ... @@
 		-       "fetch",
 		+       "async-node",
+		@@ ... @@
+		-       "document": true,
+		+       "document": false,
 		@@ ... @@
 		-     "globalObject": "self",
 		+     "globalObject": "global",
@@ -1867,6 +1909,9 @@ describe("snapshots", () => {
 			-       "minRemainingSize": undefined,
 			+       "minRemainingSize": 0,
 			@@ ... @@
+			-     "cssHeadDataCompression": true,
+			+     "cssHeadDataCompression": false,
+			@@ ... @@
 			-     "pathinfo": false,
 			+     "pathinfo": true,
 			@@ ... @@
@@ -2028,23 +2073,26 @@ describe("snapshots", () => {
 			-       "bigIntLiteral": undefined,
 			-       "const": true,
 			-       "destructuring": true,
-			-       "dynamicImport": undefined,
-			-       "dynamicImportInWorker": undefined,
-			-       "forOf": true,
-			-       "globalThis": undefined,
-			-       "module": undefined,
-			-       "optionalChaining": true,
-			-       "templateLiteral": true,
 			+       "arrowFunction": false,
 			+       "asyncFunction": false,
 			+       "bigIntLiteral": false,
 			+       "const": false,
 			+       "destructuring": false,
+			@@ ... @@
+			-       "dynamicImport": undefined,
+			-       "dynamicImportInWorker": undefined,
+			-       "forOf": true,
+			-       "globalThis": undefined,
+			-       "module": undefined,
+			-       "nodePrefixForCoreModules": true,
+			-       "optionalChaining": true,
+			-       "templateLiteral": true,
 			+       "dynamicImport": false,
 			+       "dynamicImportInWorker": false,
 			+       "forOf": false,
 			+       "globalThis": false,
 			+       "module": false,
+			+       "nodePrefixForCoreModules": false,
 			+       "optionalChaining": false,
 			+       "templateLiteral": false,
 			@@ ... @@
@@ -2059,23 +2107,26 @@ describe("snapshots", () => {
 			-       "bigIntLiteral": undefined,
 			-       "const": true,
 			-       "destructuring": true,
-			-       "dynamicImport": undefined,
-			-       "dynamicImportInWorker": undefined,
-			-       "forOf": true,
-			-       "globalThis": undefined,
-			-       "module": undefined,
-			-       "optionalChaining": true,
-			-       "templateLiteral": true,
 			+       "arrowFunction": false,
 			+       "asyncFunction": false,
 			+       "bigIntLiteral": false,
 			+       "const": false,
 			+       "destructuring": false,
+			@@ ... @@
+			-       "dynamicImport": undefined,
+			-       "dynamicImportInWorker": undefined,
+			-       "forOf": true,
+			-       "globalThis": undefined,
+			-       "module": undefined,
+			-       "nodePrefixForCoreModules": true,
+			-       "optionalChaining": true,
+			-       "templateLiteral": true,
 			+       "dynamicImport": false,
 			+       "dynamicImportInWorker": false,
 			+       "forOf": false,
 			+       "globalThis": false,
 			+       "module": false,
+			+       "nodePrefixForCoreModules": false,
 			+       "optionalChaining": false,
 			+       "templateLiteral": false,
 			@@ ... @@
@@ -2209,9 +2260,10 @@ describe("snapshots", () => {
 			@@ ... @@
 			-     "cacheUnaffected": false,
 			-     "css": undefined,
-			-     "futureDefaults": false,
 			+     "cacheUnaffected": true,
 			+     "css": true,
+			@@ ... @@
+			-     "futureDefaults": false,
 			+     "futureDefaults": true,
 			@@ ... @@
 			+       },
@@ -2264,29 +2316,33 @@ describe("snapshots", () => {
 			+         "resolve": Object {
 			+           "fullySpecified": true,
 			+           "preferRelative": true,
-			+         },
+			@@ ... @@
 			+         "type": "css",
+			+       },
 			@@ ... @@
 			-     "generator": Object {},
 			+     "generator": Object {
 			+       "css": Object {
-			+         "exportsConvention": "as-is",
+			+         "esModule": true,
 			+         "exportsOnly": false,
 			+       },
 			+       "css/auto": Object {
+			+         "exportsConvention": "as-is",
 			+         "localIdentName": "[uniqueName]-[id]-[local]",
 			+       },
 			+       "css/global": Object {
+			+         "exportsConvention": "as-is",
 			+         "localIdentName": "[uniqueName]-[id]-[local]",
 			+       },
 			+       "css/module": Object {
+			+         "exportsConvention": "as-is",
 			+         "localIdentName": "[uniqueName]-[id]-[local]",
 			+       },
 			+     },
 			@@ ... @@
+			+       },
 			+       "css": Object {
 			+         "namedExports": true,
-			+       },
 			@@ ... @@
 			+         "exportsPresence": "error",
 			@@ ... @@
@@ -2323,8 +2379,6 @@ describe("snapshots", () => {
 			@@ ... @@
 			-       "<cwd>/node_modules/",
 			+       /^(.+?[\\\\/]node_modules[\\\\/])/,
-			@@ ... @@
-			-     "unmanagedPaths": Array [],
 		`)
 	);
 
@@ -2349,15 +2403,15 @@ describe("snapshots", () => {
 			@@ ... @@
 			-     "cacheUnaffected": false,
 			-     "css": undefined,
-			-     "futureDefaults": false,
 			+     "cacheUnaffected": true,
 			+     "css": false,
+			@@ ... @@
+			-     "futureDefaults": false,
 			+     "futureDefaults": true,
 			@@ ... @@
-			+       },
 			+       Object {
 			+         "rules": Array [
-			+           Object {
+			@@ ... @@
 			+             "descriptionData": Object {
 			+               "type": "module",
 			+             },
@@ -2378,11 +2432,12 @@ describe("snapshots", () => {
 			+             },
 			+             "resolve": Object {
 			+               "fullySpecified": true,
-			@@ ... @@
+			+             },
 			+           },
 			+         ],
 			+         "type": "webassembly/async",
 			+       },
+			+       Object {
 			@@ ... @@
 			+         "exportsPresence": "error",
 			@@ ... @@
@@ -2400,8 +2455,6 @@ describe("snapshots", () => {
 			@@ ... @@
 			-       "<cwd>/node_modules/",
 			+       /^(.+?[\\\\/]node_modules[\\\\/])/,
-			@@ ... @@
-			-     "unmanagedPaths": Array [],
 		`)
 	);
 });

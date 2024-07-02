@@ -11,11 +11,13 @@ module.exports = {
 			  "bigIntLiteral": true,
 			  "const": true,
 			  "destructuring": true,
+			  "document": false,
 			  "dynamicImport": true,
 			  "dynamicImportInWorker": false,
 			  "forOf": true,
 			  "globalThis": true,
 			  "module": true,
+			  "nodePrefixForCoreModules": true,
 			  "optionalChaining": true,
 			  "templateLiteral": true,
 			}

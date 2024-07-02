@@ -29,6 +29,7 @@ const tests = fs
 		const testDirectory = path.join(base, testName);
 		const filterPath = path.join(testDirectory, "test.filter.js");
 		if (fs.existsSync(filterPath) && !require(filterPath)()) {
+			// eslint-disable-next-line jest/no-disabled-tests, jest/valid-describe-callback
 			describe.skip(testName, () => it("filtered"));
 			return false;
 		}
@@ -78,6 +79,17 @@ describe("StatsTestCases", () => {
 				if (!options.optimization) options.optimization = {};
 				if (options.optimization.minimize === undefined)
 					options.optimization.minimize = false;
+				if (
+					options.cache &&
+					options.cache !== true &&
+					options.cache.type === "filesystem"
+				) {
+					options.cache.cacheDirectory = path.resolve(
+						outputBase,
+						".cache",
+						testName
+					);
+				}
 			});
 			const c = webpack(options);
 			const compilers = c.compilers ? c.compilers : [c];

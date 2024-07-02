@@ -13,7 +13,12 @@ describe("Examples", () => {
 		const filterPath = path.join(examplePath, "test.filter.js");
 		const relativePath = path.relative(basePath, examplePath);
 		if (fs.existsSync(filterPath) && !require(filterPath)()) {
-			describe.skip(relativePath, () => it("filtered"));
+			// eslint-disable-next-line jest/no-disabled-tests, jest/valid-describe-callback
+			describe.skip(relativePath, () =>
+				it("filtered", done => {
+					done();
+				})
+			);
 			return;
 		}
 		it(

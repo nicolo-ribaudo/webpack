@@ -334,6 +334,21 @@ export type ResolveAlias =
 			[k: string]: string[] | false | string;
 	  };
 /**
+ * Plugin instance.
+ */
+export type ResolvePluginInstance =
+	| {
+			/**
+			 * The run point of the plugin, required method.
+			 */
+			apply: (arg0: import("enhanced-resolve").Resolver) => void;
+			[k: string]: any;
+	  }
+	| ((
+			this: import("enhanced-resolve").Resolver,
+			arg1: import("enhanced-resolve").Resolver
+	  ) => void);
+/**
  * A list of descriptions of loaders applied.
  */
 export type RuleSetUse =
@@ -477,6 +492,10 @@ export type CssChunkFilename = FilenameTemplate;
  * Specifies the filename template of output css files on disk. You must **not** specify an absolute path here, but the path may contain folders separated by '/'! The specified path is joined with the value of the 'output.path' option to determine the location on disk.
  */
 export type CssFilename = FilenameTemplate;
+/**
+ * Compress the data in the head tag of CSS files.
+ */
+export type CssHeadDataCompression = boolean;
 /**
  * Similar to `output.devtoolModuleFilenameTemplate`, but used in the case of duplicate module identifiers.
  */
@@ -736,6 +755,10 @@ export type AssetParserDataUrlFunction = (
 	source: string | Buffer,
 	context: {filename: string; module: import("../lib/Module")}
 ) => boolean;
+/**
+ * Configure the generated JS modules that use the ES modules syntax.
+ */
+export type CssGeneratorEsModule = boolean;
 /**
  * Specifies the convention of exported names.
  */
@@ -1471,6 +1494,12 @@ export interface RuleSetRule {
 	 * Modifiers applied to the module when rule is matched.
 	 */
 	use?: RuleSetUse;
+	/**
+	 * Match on import attributes of the dependency.
+	 */
+	with?: {
+		[k: string]: RuleSetConditionOrConditions;
+	};
 }
 /**
  * Logic operators used in a condition matcher.
@@ -1638,16 +1667,6 @@ export interface ResolveOptions {
 	 * Use synchronous filesystem calls for the resolver.
 	 */
 	useSyncFileSystemCalls?: boolean;
-}
-/**
- * Plugin instance.
- */
-export interface ResolvePluginInstance {
-	/**
-	 * The run point of the plugin, required method.
-	 */
-	apply: (resolver: import("enhanced-resolve").Resolver) => void;
-	[k: string]: any;
 }
 /**
  * Options object for node compatibility features.
@@ -2082,6 +2101,10 @@ export interface Output {
 	 */
 	cssFilename?: CssFilename;
 	/**
+	 * Compress the data in the head tag of CSS files.
+	 */
+	cssHeadDataCompression?: CssHeadDataCompression;
+	/**
 	 * Similar to `output.devtoolModuleFilenameTemplate`, but used in the case of duplicate module identifiers.
 	 */
 	devtoolFallbackModuleFilenameTemplate?: DevtoolFallbackModuleFilenameTemplate;
@@ -2280,6 +2303,10 @@ export interface Environment {
 	 */
 	destructuring?: boolean;
 	/**
+	 * The environment supports 'document'.
+	 */
+	document?: boolean;
+	/**
 	 * The environment supports an async import() function to import EcmaScript modules.
 	 */
 	dynamicImport?: boolean;
@@ -2299,6 +2326,10 @@ export interface Environment {
 	 * The environment supports EcmaScript Module syntax to import EcmaScript modules (import ... from '...').
 	 */
 	module?: boolean;
+	/**
+	 * The environment supports `node:` prefix for Node.js core modules.
+	 */
+	nodePrefixForCoreModules?: boolean;
 	/**
 	 * The environment supports optional chaining ('obj?.a' or 'obj?.()').
 	 */
@@ -2794,6 +2825,10 @@ export interface AssetGeneratorDataUrlOptions {
  */
 export interface AssetInlineGeneratorOptions {
 	/**
+	 * Whether or not this asset module should be considered binary. This can be set to 'false' to treat this asset module as text.
+	 */
+	binary?: boolean;
+	/**
 	 * The options for data url generator.
 	 */
 	dataUrl?: AssetGeneratorDataUrl;
@@ -2821,6 +2856,10 @@ export interface AssetParserOptions {
  */
 export interface AssetResourceGeneratorOptions {
 	/**
+	 * Whether or not this asset module should be considered binary. This can be set to 'false' to treat this asset module as text.
+	 */
+	binary?: boolean;
+	/**
 	 * Emit an output asset from this asset module. This can be set to 'false' to omit emitting e. g. for SSR.
 	 */
 	emit?: boolean;
@@ -2841,6 +2880,10 @@ export interface AssetResourceGeneratorOptions {
  * Generator options for css/auto modules.
  */
 export interface CssAutoGeneratorOptions {
+	/**
+	 * Configure the generated JS modules that use the ES modules syntax.
+	 */
+	esModule?: CssGeneratorEsModule;
 	/**
 	 * Specifies the convention of exported names.
 	 */
@@ -2868,9 +2911,9 @@ export interface CssAutoParserOptions {
  */
 export interface CssGeneratorOptions {
 	/**
-	 * Specifies the convention of exported names.
+	 * Configure the generated JS modules that use the ES modules syntax.
 	 */
-	exportsConvention?: CssGeneratorExportsConvention;
+	esModule?: CssGeneratorEsModule;
 	/**
 	 * Avoid generating and loading a stylesheet and only embed exports from css into output javascript files.
 	 */
@@ -2880,6 +2923,10 @@ export interface CssGeneratorOptions {
  * Generator options for css/global modules.
  */
 export interface CssGlobalGeneratorOptions {
+	/**
+	 * Configure the generated JS modules that use the ES modules syntax.
+	 */
+	esModule?: CssGeneratorEsModule;
 	/**
 	 * Specifies the convention of exported names.
 	 */
@@ -2906,6 +2953,10 @@ export interface CssGlobalParserOptions {
  * Generator options for css/module modules.
  */
 export interface CssModuleGeneratorOptions {
+	/**
+	 * Configure the generated JS modules that use the ES modules syntax.
+	 */
+	esModule?: CssGeneratorEsModule;
 	/**
 	 * Specifies the convention of exported names.
 	 */
@@ -2936,6 +2987,15 @@ export interface CssParserOptions {
 	 * Use ES modules named export for css exports.
 	 */
 	namedExports?: CssParserNamedExports;
+}
+/**
+ * Options for defer import.
+ */
+export interface DeferImportExperimentOptions {
+	/**
+	 * The execution of async modules (module that uses top-level-await or AsyncWebAssembly) cannot be deferred. This options controls how to handle them: "error", to throw an error when an async module is deferred; "ignore", to ignore the `webpackDefer` annotation when importing an async module, or one with async dependencies; "proposal", to eagerly evaluate the async subgraphs of a deferred module graph (this matches the behavior of the TC39 deferred imports proposal).
+	 */
+	asyncModule: "ignore" | "proposal" | "error";
 }
 /**
  * No generator options are supported for this module type.
@@ -3402,6 +3462,10 @@ export interface OutputNormalized {
 	 */
 	cssFilename?: CssFilename;
 	/**
+	 * Compress the data in the head tag of CSS files.
+	 */
+	cssHeadDataCompression?: CssHeadDataCompression;
+	/**
 	 * Similar to `output.devtoolModuleFilenameTemplate`, but used in the case of duplicate module identifiers.
 	 */
 	devtoolFallbackModuleFilenameTemplate?: DevtoolFallbackModuleFilenameTemplate;
@@ -3704,6 +3768,10 @@ export interface ExperimentsExtra {
 	 */
 	css?: boolean;
 	/**
+	 * Enable experimental tc39 proposal https://github.com/tc39/proposal-defer-import-eval. This allows to defer execution of a module until its first use.
+	 */
+	deferImport?: false | DeferImportExperimentOptions;
+	/**
 	 * Compile entrypoints and import()s only when they are accessed.
 	 */
 	lazyCompilation?: boolean | LazyCompilationOptions;
@@ -3720,6 +3788,10 @@ export interface ExperimentsNormalizedExtra {
 	 * Enable css support.
 	 */
 	css?: boolean;
+	/**
+	 * Enable experimental tc39 proposal https://github.com/tc39/proposal-defer-import-eval. This allows to defer execution of a module until its first use.
+	 */
+	deferImport?: false | DeferImportExperimentOptions;
 	/**
 	 * Compile entrypoints and import()s only when they are accessed.
 	 */

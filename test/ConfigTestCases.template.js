@@ -66,7 +66,8 @@ const describeCases = config => {
 					describe(testName, function () {
 						const testDirectory = path.join(casesPath, category.name, testName);
 						const filterPath = path.join(testDirectory, "test.filter.js");
-						if (fs.existsSync(filterPath) && !require(filterPath)()) {
+						if (fs.existsSync(filterPath) && !require(filterPath)(config)) {
+							// eslint-disable-next-line jest/no-disabled-tests
 							describe.skip(testName, () => {
 								it("filtered", () => {});
 							});
@@ -113,9 +114,14 @@ const describeCases = config => {
 								if (config.cache) {
 									options.cache = {
 										cacheDirectory,
-										name: `config-${idx}`,
+										name:
+											options.cache && options.cache !== true
+												? options.cache.name
+												: `config-${idx}`,
 										...config.cache
 									};
+								}
+								if (config.cache) {
 									options.infrastructureLogging = {
 										debug: true,
 										console: createLogger(infraStructureLog)
@@ -193,8 +199,10 @@ const describeCases = config => {
 								fs.mkdirSync(outputDirectory, { recursive: true });
 								infraStructureLog.length = 0;
 								const deprecationTracker = deprecationTracking.start();
-								require("..")(options, err => {
+								const compiler = require("..")(options);
+								compiler.run(err => {
 									deprecationTracker();
+									if (err) return handleFatalError(err, done);
 									const infrastructureLogging = stderr.toString();
 									if (infrastructureLogging) {
 										return done(
@@ -224,8 +232,10 @@ const describeCases = config => {
 									) {
 										return;
 									}
-									if (err) return handleFatalError(err, done);
-									done();
+									compiler.close(closeErr => {
+										if (closeErr) return handleFatalError(closeErr, done);
+										done();
+									});
 								});
 							}, 60000);
 							it(`${testName} should pre-compile to fill disk cache (2nd)`, done => {
@@ -233,7 +243,8 @@ const describeCases = config => {
 								fs.mkdirSync(outputDirectory, { recursive: true });
 								infraStructureLog.length = 0;
 								const deprecationTracker = deprecationTracking.start();
-								require("..")(options, (err, stats) => {
+								const compiler = require("..")(options);
+								compiler.run((err, stats) => {
 									deprecationTracker();
 									if (err) return handleFatalError(err, done);
 									const { modules, children, errorsCount } = stats.toJson({
@@ -293,7 +304,10 @@ const describeCases = config => {
 									) {
 										return;
 									}
-									done();
+									compiler.close(closeErr => {
+										if (closeErr) return handleFatalError(closeErr, done);
+										done();
+									});
 								});
 							}, 40000);
 						}
@@ -442,6 +456,8 @@ const describeCases = config => {
 											baseModuleScope.document = globalContext.document;
 											baseModuleScope.setTimeout = globalContext.setTimeout;
 											baseModuleScope.clearTimeout = globalContext.clearTimeout;
+											baseModuleScope.getComputedStyle =
+												globalContext.getComputedStyle;
 											baseModuleScope.URL = URL;
 											baseModuleScope.Worker =
 												require("./helpers/createFakeWorker")({
@@ -540,6 +556,7 @@ const describeCases = config => {
 													}
 													if (esmMode === "unlinked") return esm;
 													return (async () => {
+														if (esmMode === "unlinked") return esm;
 														await esm.link(
 															async (specifier, referencingModule) => {
 																return await asModule(
@@ -571,6 +588,11 @@ const describeCases = config => {
 															: ns;
 													})();
 												} else {
+													const isJSON = p.endsWith(".json");
+													if (isJSON) {
+														return JSON.parse(content);
+													}
+
 													if (p in requireCache) {
 														return requireCache[p].exports;
 													}
@@ -578,6 +600,7 @@ const describeCases = config => {
 														exports: {}
 													};
 													requireCache[p] = m;
+
 													const moduleScope = {
 														...baseModuleScope,
 														require: _require.bind(

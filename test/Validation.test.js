@@ -182,7 +182,7 @@ describe("Validation", () => {
 			expect(msg).toMatchInlineSnapshot(`
 			"Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
 			 - configuration.module.rules[0].oneOf[0] has an unknown property 'passer'. These properties are valid:
-			   object { assert?, compiler?, dependency?, descriptionData?, enforce?, exclude?, generator?, include?, issuer?, issuerLayer?, layer?, loader?, mimetype?, oneOf?, options?, parser?, realResource?, resolve?, resource?, resourceFragment?, resourceQuery?, rules?, scheme?, sideEffects?, test?, type?, use? }
+			   object { assert?, compiler?, dependency?, descriptionData?, enforce?, exclude?, generator?, include?, issuer?, issuerLayer?, layer?, loader?, mimetype?, oneOf?, options?, parser?, realResource?, resolve?, resource?, resourceFragment?, resourceQuery?, rules?, scheme?, sideEffects?, test?, type?, use?, with? }
 			   -> A rule description with conditions and effects for modules."
 		`)
 	);
@@ -483,15 +483,7 @@ describe("Validation", () => {
 	createTestCase(
 		"holey array",
 		// eslint-disable-next-line no-sparse-arrays
-		[
-			{
-				mode: "production"
-			},
-			,
-			{
-				mode: "development"
-			}
-		],
+		[{ mode: "production" }, , { mode: "development" }],
 		msg =>
 			expect(msg).toMatchInlineSnapshot(`
 			"Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
@@ -510,7 +502,7 @@ describe("Validation", () => {
 			expect(msg).toMatchInlineSnapshot(`
 			"Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
 			 - configuration.output has an unknown property 'ecmaVersion'. These properties are valid:
-			   object { amdContainer?, assetModuleFilename?, asyncChunks?, auxiliaryComment?, charset?, chunkFilename?, chunkFormat?, chunkLoadTimeout?, chunkLoading?, chunkLoadingGlobal?, clean?, compareBeforeEmit?, crossOriginLoading?, cssChunkFilename?, cssFilename?, devtoolFallbackModuleFilenameTemplate?, devtoolModuleFilenameTemplate?, devtoolNamespace?, enabledChunkLoadingTypes?, enabledLibraryTypes?, enabledWasmLoadingTypes?, environment?, filename?, globalObject?, hashDigest?, hashDigestLength?, hashFunction?, hashSalt?, hotUpdateChunkFilename?, hotUpdateGlobal?, hotUpdateMainFilename?, ignoreBrowserWarnings?, iife?, importFunctionName?, importMetaName?, library?, libraryExport?, libraryTarget?, module?, path?, pathinfo?, publicPath?, scriptType?, sourceMapFilename?, sourcePrefix?, strictModuleErrorHandling?, strictModuleExceptionHandling?, trustedTypes?, umdNamedDefine?, uniqueName?, wasmLoading?, webassemblyModuleFilename?, workerChunkLoading?, workerPublicPath?, workerWasmLoading? }
+			   object { amdContainer?, assetModuleFilename?, asyncChunks?, auxiliaryComment?, charset?, chunkFilename?, chunkFormat?, chunkLoadTimeout?, chunkLoading?, chunkLoadingGlobal?, clean?, compareBeforeEmit?, crossOriginLoading?, cssChunkFilename?, cssFilename?, cssHeadDataCompression?, devtoolFallbackModuleFilenameTemplate?, devtoolModuleFilenameTemplate?, devtoolNamespace?, enabledChunkLoadingTypes?, enabledLibraryTypes?, enabledWasmLoadingTypes?, environment?, filename?, globalObject?, hashDigest?, hashDigestLength?, hashFunction?, hashSalt?, hotUpdateChunkFilename?, hotUpdateGlobal?, hotUpdateMainFilename?, ignoreBrowserWarnings?, iife?, importFunctionName?, importMetaName?, library?, libraryExport?, libraryTarget?, module?, path?, pathinfo?, publicPath?, scriptType?, sourceMapFilename?, sourcePrefix?, strictModuleErrorHandling?, strictModuleExceptionHandling?, trustedTypes?, umdNamedDefine?, uniqueName?, wasmLoading?, webassemblyModuleFilename?, workerChunkLoading?, workerPublicPath?, workerWasmLoading? }
 			   -> Options affecting the output of the compilation. \`output\` options tell webpack how to write the compiled files to disk.
 			   Did you mean output.environment (output.ecmaVersion was a temporary configuration option during webpack 5 beta)?"
 		`)
